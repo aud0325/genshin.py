@@ -123,7 +123,7 @@ class APIModel(pydantic.BaseModel, abc.ABC):
 
         return {aliases.get(name, name): value for name, value in values.items()}
 
-    @pydantic.root_validator()
+    @pydantic.root_validator(skip_on_failure=True)
     def __parse_timezones(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Timezones are a pain to deal with so we at least allow a plain hour offset."""
         for name, field in cls.__fields__.items():
